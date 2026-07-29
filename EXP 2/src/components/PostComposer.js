@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../features/postsSlice";
 import { changePlatform } from "../features/platformSlice";
@@ -26,9 +26,17 @@ function PostComposer() {
     setText("");
   };
 
+  // Memoized platform options
+  const platformOptions = useMemo(() => {
+    return platforms.map((platform) => (
+      <option key={platform} value={platform}>
+        {platform}
+      </option>
+    ));
+  }, [platforms]);
+
   return (
     <div className="composer">
-
       <h2>✍️ Create New Post</h2>
 
       <textarea
@@ -40,21 +48,14 @@ function PostComposer() {
 
       <select
         value={currentPlatform}
-        onChange={(e) =>
-          dispatch(changePlatform(e.target.value))
-        }
+        onChange={(e) => dispatch(changePlatform(e.target.value))}
       >
-        {platforms.map((platform) => (
-          <option key={platform}>
-            {platform}
-          </option>
-        ))}
+        {platformOptions}
       </select>
 
       <button onClick={handleSubmit}>
         🚀 Add Draft
       </button>
-
     </div>
   );
 }

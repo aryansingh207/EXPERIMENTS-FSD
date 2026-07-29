@@ -1,32 +1,27 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  deletePost,
-  updatePost,
-} from "../features/postsSlice";
+import { deletePost, updatePost } from "../features/postsSlice";
+import { selectFilteredPosts } from "../features/selectors";
 
-function DraftList() {
+const DraftList = React.memo(() => {
   const dispatch = useDispatch();
 
-  const posts = useSelector(
-    (state) => state.posts.posts
-  );
+  const posts = useSelector(selectFilteredPosts);
 
   return (
     <div>
 
-      <h2>📂 Saved Drafts</h2>
+      <h2>📂 Filtered Drafts</h2>
 
       {posts.length === 0 ? (
         <p className="empty">
-            No Drafts Yet...
+          No Posts for Selected Platform
         </p>
       ) : (
         posts.map((post) => (
-          <div
-            key={post.id}
-            className="post"
-          >
-            <h4>{post.platform}</h4>
+          <div key={post.id} className="post">
+
+            <h4>🌐 {post.platform}</h4>
 
             <p>{post.text}</p>
 
@@ -64,6 +59,6 @@ function DraftList() {
 
     </div>
   );
-}
+});
 
 export default DraftList;
