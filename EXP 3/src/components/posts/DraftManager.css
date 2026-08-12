@@ -1,0 +1,110 @@
+.draft-manager {
+  padding: 20px;
+}
+
+.draft-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.draft-container h2 {
+  margin-bottom: 20px;
+}
+
+.drafts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.draft-card {
+  padding: 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.draft-card:hover {
+  transform: translateY(-4px);
+}
+
+.draft-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.draft-header h3 {
+  font-size: 1.1rem;
+}
+
+.draft-date {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.draft-card p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.draft-platforms {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.draft-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.draft-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.draft-edit input,
+.draft-edit textarea {
+  padding: 8px 12px;
+  border: 2px solid;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.draft-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.draft-edit-actions button {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.draft-edit-actions button:first-child {
+  background: #27ae60;
+  color: white;
+}
+
+.draft-edit-actions button:last-child {
+  background: #e74c3c;
+  color: white;
+}
+
+.draft-edit-actions button:hover {
+  transform: translateY(-2px);
+}
+
+.no-drafts {
+  text-align: center;
+  padding: 40px;
+}
