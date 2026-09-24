@@ -1,4 +1,19 @@
-export default function RenderMonitor({ events, renderCounts, totalRenders }) {
+import { useEffect, useState } from 'react'
+
+export default function RenderMonitor({ events, renderStatsRef }) {
+  const [, forceUpdate] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      forceUpdate((n) => n + 1)
+    }, 100)
+
+    return () => clearInterval(id)
+  }, [])
+
+  const totalRenders = renderStatsRef.current.total
+  const renderCounts = renderStatsRef.current.counts
+
   const rendered = Object.keys(renderCounts).length
   const maxCount = Math.max(1, ...Object.values(renderCounts))
 
@@ -11,6 +26,7 @@ export default function RenderMonitor({ events, renderCounts, totalRenders }) {
           <div className="stat-number">{totalRenders}</div>
           <div className="stat-label">total renders logged</div>
         </div>
+
         <div>
           <div className="stat-number">
             {rendered}/{events.length}
@@ -23,13 +39,23 @@ export default function RenderMonitor({ events, renderCounts, totalRenders }) {
         {events.map((event) => {
           const count = renderCounts[event.id] || 0
           const width = Math.round((count / maxCount) * 100)
+
           return (
             <li key={event.id} className="monitor-row">
-              <span className="monitor-name">{event.title}</span>
-              <span className="monitor-bar-track">
-                <span className="monitor-bar-fill" style={{ width: `${width}%` }} />
+              <span className="monitor-name">
+                {event.title}
               </span>
-              <span className="monitor-count">{count}</span>
+
+              <span className="monitor-bar-track">
+                <span
+                  className="monitor-bar-fill"
+                  style={{ width: `${width}%` }}
+                />
+              </span>
+
+              <span className="monitor-count">
+                {count}
+              </span>
             </li>
           )
         })}

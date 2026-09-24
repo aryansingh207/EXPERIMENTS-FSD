@@ -24,20 +24,21 @@ export default function App() {
   }, [liveClockOn])
 
   // --- render monitor bookkeeping -------------------------------------
-  const [renderCounts, setRenderCounts] = useState({})
-  const totalRef = useRef(0)
-  const [totalRenders, setTotalRenders] = useState(0)
+  const renderStatsRef = useRef({
+    total: 0,
+    counts: {},
+  })
 
   const logRender = useCallback((id) => {
-    totalRef.current += 1
-    setTotalRenders(totalRef.current)
-    setRenderCounts((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }))
+    renderStatsRef.current.total += 1
+
+    renderStatsRef.current.counts[id] =
+      (renderStatsRef.current.counts[id] || 0) + 1
   }, [])
 
   const resetCounters = () => {
-    totalRef.current = 0
-    setTotalRenders(0)
-    setRenderCounts({})
+    renderStatsRef.current.total = 0
+    renderStatsRef.current.counts = {}
   }
 
   // --- drag and drop ----------------------------------------------------
@@ -181,7 +182,7 @@ export default function App() {
           </div>
         </div>
 
-        <RenderMonitor events={events} renderCounts={renderCounts} totalRenders={totalRenders} />
+        <RenderMonitor events={events} renderStatsRef={renderStatsRef}/>
       </section>
 
       <footer className="clock-readout">
